@@ -1,13 +1,11 @@
 import { google } from "googleapis";
 
 /* ================= ENV CHECK ================= */
-
 if (!process.env.GOOGLE_SERVICE_ACCOUNT_JSON) {
   throw new Error("GOOGLE_SERVICE_ACCOUNT_JSON is missing");
 }
 
 /* ================= GOOGLE AUTH ================= */
-
 const auth = new google.auth.GoogleAuth({
   credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON),
   scopes: ["https://www.googleapis.com/auth/spreadsheets"],
@@ -15,51 +13,39 @@ const auth = new google.auth.GoogleAuth({
 
 const sheets = google.sheets({ version: "v4", auth });
 
-/* ================= SHEET CONFIG ================= */
-
-// 🔥 IMPORTANT: Use only column A to force next-row append
+// IMPORTANT: Use only column A to force next-row append
 const SPREADSHEET_ID = "1kLWxlQNOPLvHRZiXmWsB1SpzjSYuyfqUZnhdFpYlCdg";
 const RANGE = "Sheet1!A:A";
 
-/* ================= APPEND FUNCTION ================= */
-
-export const appendToSheet = async ({
-  deviceId,
-  temp,
-  turb,
-  do_val,
-  tds,
-}) => {
+export const appendToSheet = async ({ deviceId, temp, turb, do_val, tds , ec, ph }) => {
   try {
+
     /* ---------- TIME (IST) ---------- */
-
     const now = new Date();
-
     const dateIST = now.toLocaleDateString("en-CA", {
       timeZone: "Asia/Kolkata",
     }); // YYYY-MM-DD
-
     const timeIST = now.toLocaleTimeString("en-GB", {
       timeZone: "Asia/Kolkata",
       hour12: false,
     }); // HH:MM:SS
 
-    /* ---------- ROW DATA ---------- */
 
+    /* ---------- ROW DATA ---------- */
     const row = [
       dateIST,      // A - Date (IST)
       timeIST,      // B - Time (IST)
       deviceId,     // C - Device ID
       do_val,       // D - DO
-      "",            // E - EC (optional)
+      ph,            // E - EC (optional)
       tds,          // F - TDS
       turb,         // G - Turbidity
       temp,         // H - Temperature
-      ""             // I - pH (optional)
+      ec            // I - pH (optional)
     ];
 
-    /* ---------- APPEND ---------- */
 
+    /* ---------- APPEND ---------- */
     const res = await sheets.spreadsheets.values.append({
       spreadsheetId: SPREADSHEET_ID,
       range: RANGE,
