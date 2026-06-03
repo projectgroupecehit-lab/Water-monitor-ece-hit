@@ -17,18 +17,19 @@ const sheets = google.sheets({ version: "v4", auth });
 const SPREADSHEET_ID = "1kLWxlQNOPLvHRZiXmWsB1SpzjSYuyfqUZnhdFpYlCdg";
 const RANGE = "Sheet1!A:A";
 
-export const appendToSheet = async ({ deviceId, temp, turb, do_val, tds , ec, ph }) => {
+export const appendToSheet = async ({ deviceId, temp, turb, do_val, tds, ec, ph }) => {
   try {
 
     /* ---------- TIME (IST) ---------- */
     const now = new Date();
-    const dateIST = now.toLocaleDateString("en-CA", {
+    const dateIST = `'${now.toLocaleDateString("en-CA", {
       timeZone: "Asia/Kolkata",
-    }); // YYYY-MM-DD
-    const timeIST = now.toLocaleTimeString("en-GB", {
+    })}`;
+
+    const timeIST = `'${now.toLocaleTimeString("en-GB", {
       timeZone: "Asia/Kolkata",
       hour12: false,
-    }); // HH:MM:SS
+    })}`;
 
 
     /* ---------- ROW DATA ---------- */
