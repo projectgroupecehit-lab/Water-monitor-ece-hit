@@ -9,13 +9,13 @@ const setdata = async (req, res) => {
 
   try { 
     const tempData = await Temp.create({
-      deviceId,
-      temperature: temp,
-      turbidity: turb,
-      do: do_val,
-      tds,
-      ph,
-      ec
+      device_id: deviceId,
+      temperature: Number(temp),
+      turbidity: Number(turb),
+      do: Number(do_val),
+      tds: Number(tds),
+      ph: Number(ph),
+      ec: Number(ec),
     });
 
     appendToSheet({ deviceId, temp, turb, do_val, tds, ec, ph })
