@@ -1,6 +1,8 @@
 // final perfect sender
 
-
+// Description: This code use in Arduino uno for reading the sensor data. It read the sensor data and send the data to esp8266
+// using the serial communication(TX-RX)
+// working Voltage 5v
 
 
 #include <OneWire.h>
