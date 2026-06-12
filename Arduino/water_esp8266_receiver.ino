@@ -40,7 +40,7 @@ uint8_t indexPos = 0;
 bool receiving = false;
 
 /* ================= WIFI CONFIGURATION ================= */
-const char* serverUrl = "https://water-monitor-ece-hit-backend.onrender.com/api/data";
+const char* serverUrl = "https://water-monitor-ece-hit-backend.onrender.com/api/data"; // Backend url running on render
 
 WiFiManager wm;
 
